@@ -21,3 +21,34 @@ diccionarioEquipos = {
     "UD Las Palmas": "Las Palmas",
 }
 
+def generarCalendario(diccionarioEquipos):
+    jornadas = []
+    nombresEquipos = list(diccionarioEquipos.keys())
+    numeroEquipos = len(nombresEquipos)
+
+    numeroJornadas = len(nombresEquipos) -1
+    mitad = len(nombresEquipos) // 2
+
+    for jornada in range(numeroJornadas):
+        partidos = []
+        for i in range(mitad):
+            local = nombresEquipos[i]
+            visitante = nombresEquipos[-i - 1]
+
+            if jornada % 2 == 0:
+                partidos.append((local,visitante))
+            else:
+                partidos.append((visitante,local))
+
+        jornadas.append(partidos)
+        
+
+
+def main():
+    # Entrada
+
+    # Procesamiento
+
+    # Salida
+if __name__ == "__main__":
+    main()
