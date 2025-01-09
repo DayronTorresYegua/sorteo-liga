@@ -1,54 +1,53 @@
-diccionarioEquipos = {
-    "Real Betis": "Sevilla",
-    "Sevilla FC": "Sevilla",
-    "Real Madrid": "Madrid",
-    "Atlético de Madrid": "Madrid",
-    "FC Barcelona": "Barcelona",
-    "Espanyol": "Barcelona",
-    "Valencia CF": "Valencia",
-    "Villarreal CF": "Villarreal",
-    "Athletic Club": "Bilbao",
-    "Real Sociedad": "San Sebastián",
-    "Celta de Vigo": "Vigo",
-    "Real Valladolid": "Valladolid",
-    "Osasuna": "Pamplona",
-    "Real Zaragoza": "Zaragoza",
-    "Getafe CF": "Getafe",
-    "Rayo Vallecano": "Madrid",
-    "Deportivo Alavés": "Vitoria-Gasteiz",
-    "Real Mallorca": "Palma de Mallorca",
-    "Girona FC": "Girona",
-    "UD Las Palmas": "Las Palmas",
-}
+def generarJornada(equipos):
 
-def generarCalendario(diccionarioEquipos):
-    jornadas = []
-    nombresEquipos = list(diccionarioEquipos.keys())
+    nombresEquipos = list(equipos.keys())
     numeroEquipos = len(nombresEquipos)
 
-    numeroJornadas = len(nombresEquipos) -1
-    mitad = len(nombresEquipos) // 2
+    mitad = len(nombresEquipos) //2
 
-    for jornada in range(numeroJornadas):
-        partidos = []
-        for i in range(mitad):
-            local = nombresEquipos[i]
-            visitante = nombresEquipos[-i - 1]
+    partidos = []
 
-            if jornada % 2 == 0:
-                partidos.append((local,visitante))
-            else:
-                partidos.append((visitante,local))
+    for i in range(mitad):
+        local = nombresEquipos[i]
+        visitante = nombresEquipos[- i - 1]
+        partidos.append((local, visitante))
 
-        jornadas.append(partidos)
-        
+    return partidos
 
+def mostrarJornada(jornada):
+    for local, visitante in jornada:
+        print(f"{local} vs {visitante}")
 
 def main():
     # Entrada
+    equipos = {
+        "Real Betis": "Sevilla",
+        "Sevilla FC": "Sevilla",
+        "Real Madrid": "Madrid",
+        "Atlético de Madrid": "Madrid",
+        "FC Barcelona": "Barcelona",
+        "Espanyol": "Barcelona",
+        "Valencia CF": "Valencia",
+        "Villarreal CF": "Villarreal",
+        "Athletic Club": "Bilbao",
+        "Real Sociedad": "San Sebastián",
+        "Celta de Vigo": "Vigo",
+        "Real Valladolid": "Valladolid",
+        "Osasuna": "Pamplona",
+        "Real Zaragoza": "Zaragoza",
+        "Getafe CF": "Getafe",
+        "Rayo Vallecano": "Madrid",
+        "Deportivo Alavés": "Vitoria-Gasteiz",
+        "Real Mallorca": "Palma de Mallorca",
+        "Girona FC": "Girona",
+        "UD Las Palmas": "Las Palmas",
+    }
 
     # Procesamiento
+    jornada = generarJornada(equipos)
 
     # Salida
+
+    mostrarJornada(jornada)
 if __name__ == "__main__":
     main()
