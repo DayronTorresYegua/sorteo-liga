@@ -1,53 +1,89 @@
-def generarJornada(equipos):
+def obtenerEquipos():
+   equipos = {
+       "Real Betis": "Sevilla",
+       "Sevilla FC": "Sevilla",
+       "Real Madrid": "Madrid",
+       "Atlético de Madrid": "Madrid",
+       "FC Barcelona": "Barcelona",
+       "Espanyol": "Barcelona",
+       "Valencia CF": "Valencia",
+       "Villarreal CF": "Villarreal",
+       "Athletic Club": "Bilbao",
+       "Real Sociedad": "San Sebastián",
+       "Celta de Vigo": "Vigo",
+       "Real Valladolid": "Valladolid",
+       "Osasuna": "Pamplona",
+       "Real Zaragoza": "Zaragoza",
+       "Getafe CF": "Getafe",
+       "Rayo Vallecano": "Madrid",
+       "Deportivo Alavés": "Vitoria-Gasteiz",
+       "Real Mallorca": "Palma de Mallorca",
+       "Girona FC": "Girona",
+       "UD Las Palmas": "Las Palmas",
+   }
+   return list(equipos.keys()) 
 
-    nombresEquipos = list(equipos.keys())
-    numeroEquipos = len(nombresEquipos)
+def generarJornada(equipos, jornadaAnteriorLocales):
+   jornada = [] 
+   mitad = len(equipos) // 2 
 
-    mitad = len(nombresEquipos) //2
+   for i in range(mitad):
+       local = equipos[i] 
+       visitante = equipos[-i-1] 
 
-    partidos = []
+       if local in jornadaAnteriorLocales:
+           local, visitante = visitante, local
 
-    for i in range(mitad):
-        local = nombresEquipos[i]
-        visitante = nombresEquipos[- i - 1]
-        partidos.append((local, visitante))
 
-    return partidos
+       jornada.append((local, visitante)) 
 
-def mostrarJornada(jornada):
-    for local, visitante in jornada:
-        print(f"{local} vs {visitante}")
+   return jornada
+
+def generarJornadasIda(equipos):
+   nombresEquipos = equipos[:] 
+   jornadasIda = [] 
+   jornadaAnteriorLocales = [] 
+
+   for _ in range(len(nombresEquipos) - 1):
+       jornada = generarJornada(nombresEquipos, jornadaAnteriorLocales)
+       jornadasIda.append(jornada) 
+
+       # Actualizamos los equipos que fueron locales en esta jornada
+       jornadaAnteriorLocales = [partido[0] for partido in jornada]
+
+       # Rotamos los equipos para evitar que jueguen siempre contra los mismos
+       nombresEquipos.insert(1, nombresEquipos.pop())  # Mueve el último equipo al segundo puesto
+
+   return jornadasIda
+
+def generarJornadasVuelta(jornadasIda):
+   jornadasVuelta = []
+   for jornada in jornadasIda:
+       jornadaVuelta = [(visitante, local) for local, visitante in jornada]
+       jornadasVuelta.append(jornadaVuelta)
+
+   return jornadasVuelta
+
+def mostrarJornadas(jornadas):
+   numeroJornada = 1
+   for jornada in jornadas:
+       print(f"Jornada {numeroJornada}:")
+       for local, visitante in jornada:
+           print(f"{local} vs {visitante}")
+       print()
+       numeroJornada += 1
 
 def main():
-    # Entrada
-    equipos = {
-        "Real Betis": "Sevilla",
-        "Sevilla FC": "Sevilla",
-        "Real Madrid": "Madrid",
-        "Atlético de Madrid": "Madrid",
-        "FC Barcelona": "Barcelona",
-        "Espanyol": "Barcelona",
-        "Valencia CF": "Valencia",
-        "Villarreal CF": "Villarreal",
-        "Athletic Club": "Bilbao",
-        "Real Sociedad": "San Sebastián",
-        "Celta de Vigo": "Vigo",
-        "Real Valladolid": "Valladolid",
-        "Osasuna": "Pamplona",
-        "Real Zaragoza": "Zaragoza",
-        "Getafe CF": "Getafe",
-        "Rayo Vallecano": "Madrid",
-        "Deportivo Alavés": "Vitoria-Gasteiz",
-        "Real Mallorca": "Palma de Mallorca",
-        "Girona FC": "Girona",
-        "UD Las Palmas": "Las Palmas",
-    }
+   # Entrada
+   equipos = obtenerEquipos()
 
-    # Procesamiento
-    jornada = generarJornada(equipos)
+   # Procesamiento
+   jornadasIda = generarJornadasIda(equipos)
+   jornadasVuelta = generarJornadasVuelta(jornadasIda)
 
-    # Salida
+   # Salida
+   print("Calendario de la Liga:")
+   mostrarJornadas(jornadasIda + jornadasVuelta) 
 
-    mostrarJornada(jornada)
 if __name__ == "__main__":
-    main()
+   main()
