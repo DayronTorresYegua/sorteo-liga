@@ -34,7 +34,6 @@ def generarJornada(equipos, jornadaAnteriorLocales):
        if local in jornadaAnteriorLocales:
            local, visitante = visitante, local
 
-
        jornada.append((local, visitante)) 
 
    return jornada
