@@ -39,19 +39,16 @@ def generarJornada(equipos, jornadaAnteriorLocales):
    return jornada
 
 def generarJornadasIda(equipos):
-   nombresEquipos = equipos[:] 
    jornadasIda = [] 
    jornadaAnteriorLocales = [] 
 
-   for _ in range(len(nombresEquipos) - 1):
-       jornada = generarJornada(nombresEquipos, jornadaAnteriorLocales)
+   for _ in range(len(equipos) - 1):
+       jornada = generarJornada(equipos, jornadaAnteriorLocales)
        jornadasIda.append(jornada) 
 
-       # Actualizamos los equipos que fueron locales en esta jornada
        jornadaAnteriorLocales = [partido[0] for partido in jornada]
 
-       # Rotamos los equipos para evitar que jueguen siempre contra los mismos
-       nombresEquipos.insert(1, nombresEquipos.pop())  # Mueve el último equipo al segundo puesto
+       equipos.insert(1, equipos.pop())  
 
    return jornadasIda
 
